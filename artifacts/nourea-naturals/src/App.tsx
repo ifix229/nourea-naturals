@@ -935,7 +935,7 @@ function CartSidebar({
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      await fetch("YOUR_GOOGLE_SCRIPT_URL", {
+      await fetch("https://script.google.com/macros/s/AKfycbxZ7y9-fPjf_muIyxmgridjsD340gHIUbNqkXe6-Y5fWK1X_8dVINuaAcTQyQdw2Rs/exec", {
         method: "POST",
         body: JSON.stringify({ ...formData, quantity, total }),
       });
