@@ -12,6 +12,43 @@ import heroProductImg from "./assets/hero-product.png";
 
 const queryClient = new QueryClient();
 
+// ANNOUNCEMENT BAR
+function AnnouncementBar() {
+  const messages = [
+    { icon: "🚚", text: "FREE DELIVERY ALL OVER PAKISTAN 🇵🇰" },
+    { icon: "⭐", text: "Premium Beard Care for Modern Men" },
+    { icon: "🇵🇰", text: "Proudly Made in Pakistan" },
+    { icon: "✨", text: "Nature's Finest for a Modern Man" },
+  ];
+  const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => setCurrent(c => (c + 1) % messages.length), 3200);
+    return () => clearInterval(timer);
+  }, []);
+
+  return (
+    <div className="fixed top-0 w-full z-50 h-9 sm:h-10 bg-black flex items-center justify-center overflow-hidden">
+      <div className="absolute inset-0 border-b border-primary/40" />
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent" />
+      <AnimatePresence mode="wait">
+        <motion.p
+          key={current}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          transition={{ duration: 0.35, ease: "easeOut" }}
+          className="text-[11px] sm:text-xs font-semibold tracking-[0.18em] sm:tracking-[0.22em] uppercase flex items-center gap-2"
+        >
+          <span>{messages[current].icon}</span>
+          <span className="text-primary">{messages[current].text.split(' ')[0]}</span>
+          <span className="text-white/80">{messages[current].text.split(' ').slice(1).join(' ')}</span>
+        </motion.p>
+      </AnimatePresence>
+    </div>
+  );
+}
+
 // Shared Section Wrapper for Animation
 function FadeIn({ children, className = "" }: { children: React.ReactNode, className?: string }) {
   return (
@@ -54,7 +91,7 @@ function Navbar({ onOrderNow }: { onOrderNow: () => void }) {
 
   return (
     <>
-      <header className={`fixed top-0 w-full z-40 transition-all duration-300 ${scrolled ? "bg-background/90 backdrop-blur-lg border-b border-border/50 py-3" : "bg-transparent py-5"}`}>
+      <header className={`fixed top-9 sm:top-10 w-full z-40 transition-all duration-300 ${scrolled ? "bg-background/90 backdrop-blur-lg border-b border-border/50 py-3" : "bg-transparent py-5"}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Leaf className="w-4 h-4 text-primary" />
@@ -107,7 +144,7 @@ function Navbar({ onOrderNow }: { onOrderNow: () => void }) {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 28, stiffness: 260 }}
-              className="fixed right-0 top-0 h-full w-72 bg-card border-l border-border/50 z-40 md:hidden flex flex-col pt-20 px-6 gap-2"
+              className="fixed right-0 top-0 h-full w-72 bg-card border-l border-border/50 z-40 md:hidden flex flex-col pt-28 px-6 gap-2"
             >
               {navLinks.map(l => (
                 <button
@@ -135,7 +172,7 @@ function Navbar({ onOrderNow }: { onOrderNow: () => void }) {
 // 2. HERO SECTION
 function Hero({ onOrderNow }: { onOrderNow: () => void }) {
   return (
-    <section className="relative min-h-screen flex items-center pt-20 pb-8 overflow-hidden">
+    <section className="relative min-h-screen flex items-center pt-32 sm:pt-36 pb-8 overflow-hidden">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/10 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 w-full grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 items-center z-10">
@@ -524,6 +561,67 @@ function Footer() {
   );
 }
 
+// ORDER SUMMARY CARD (reused in cart + checkout)
+function OrderSummaryCard({ quantity, compact = false }: { quantity: number; compact?: boolean }) {
+  const price = 1499;
+  const subtotal = price * quantity;
+  return (
+    <div className={`bg-background/60 backdrop-blur-sm border border-primary/20 rounded-2xl overflow-hidden ${compact ? "p-4" : "p-5"}`}>
+      <h3 className={`font-serif text-primary ${compact ? "text-base mb-3" : "text-lg mb-4"} uppercase tracking-widest`}>Order Summary</h3>
+      
+      {/* Product line */}
+      <div className="flex items-center gap-3 mb-4 pb-4 border-b border-border/40">
+        <div className="w-14 h-14 rounded-xl bg-card overflow-hidden shrink-0 border border-border/30">
+          <img src={heroProductImg} alt="Serum" className="w-full h-full object-cover" />
+        </div>
+        <div className="flex-1 min-w-0">
+          <p className="text-white text-sm font-medium leading-tight">Beard Nourishing Serum</p>
+          <p className="text-muted-foreground text-xs mt-0.5">× {quantity}</p>
+        </div>
+        <span className="text-white font-semibold text-sm shrink-0">PKR {subtotal.toLocaleString()}</span>
+      </div>
+
+      {/* Price breakdown */}
+      <div className="space-y-2.5 mb-4">
+        <div className="flex justify-between text-sm">
+          <span className="text-muted-foreground">Subtotal</span>
+          <span className="text-white">PKR {subtotal.toLocaleString()}</span>
+        </div>
+        <div className="flex justify-between text-sm">
+          <span className="text-muted-foreground">Delivery Fee</span>
+          <span className="text-green-400 font-semibold">FREE</span>
+        </div>
+      </div>
+
+      {/* Total */}
+      <div className="flex justify-between items-center pt-3 border-t border-border/40">
+        <span className="text-white font-semibold text-sm uppercase tracking-wider">Total</span>
+        <span className="text-primary font-bold text-lg">PKR {subtotal.toLocaleString()}</span>
+      </div>
+    </div>
+  );
+}
+
+// TRUST BADGES
+function TrustList() {
+  const items = [
+    "Free Delivery Across Pakistan",
+    "Secure Order Processing",
+    "Premium Natural Ingredients",
+    "Fast Customer Support",
+  ];
+  return (
+    <div className="mt-4 space-y-2">
+      {items.map((item, i) => (
+        <div key={i} className="flex items-center gap-2 text-xs text-muted-foreground">
+          <Check className="w-3.5 h-3.5 text-primary shrink-0" />
+          <span>{item}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 // CART SIDEBAR
 function CartSidebar({ 
   isOpen, 
@@ -544,31 +642,22 @@ function CartSidebar({
   const total = price * quantity;
 
   useEffect(() => {
-    if (!isOpen) {
-      setTimeout(() => setStep("cart"), 300);
-    }
+    if (!isOpen) setTimeout(() => setStep("cart"), 300);
   }, [isOpen]);
 
   const handleConfirmOrder = async (e: FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    // Webhook/Sheet integration (fire and forget)
     try {
       await fetch("YOUR_GOOGLE_SCRIPT_URL", {
         method: "POST",
         body: JSON.stringify({ ...formData, quantity, total }),
       });
-    } catch (e) {
-      // ignore
-    }
+    } catch (_) { /* ignore */ }
 
-    // WhatsApp logic
     const text = `New Order from NOUREA NATURALS\nName: ${formData.name}\nPhone: ${formData.phone}\nAddress: ${formData.address}\nProduct: Beard Nourishing Serum\nQuantity: ${quantity}\nTotal: PKR ${total}`;
-    
-    const url = `https://wa.me/923198615519?text=${encodeURIComponent(text)}`;
-    window.open(url, '_blank');
-    
+    window.open(`https://wa.me/923198615519?text=${encodeURIComponent(text)}`, '_blank');
+
     setIsSubmitting(false);
     toast.success("Order request started via WhatsApp!");
     onClose();
@@ -576,134 +665,169 @@ function CartSidebar({
     setFormData({ name: "", phone: "", address: "" });
   };
 
+  const inputCls = "w-full bg-background/80 border border-border/50 p-3 rounded-xl text-white text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-muted-foreground/40";
+
   return (
     <AnimatePresence>
       {isOpen && (
         <>
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             onClick={onClose}
             className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50"
           />
           <motion.div
-            initial={{ x: "100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: "100%" }}
+            initial={{ x: "100%" }} animate={{ x: 0 }} exit={{ x: "100%" }}
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="fixed right-0 top-0 h-full w-full max-w-md bg-card border-l border-primary/20 z-50 flex flex-col shadow-2xl"
+            className={`fixed right-0 top-0 h-full w-full z-50 flex flex-col shadow-2xl bg-card border-l border-primary/20 ${step === "checkout" ? "max-w-xl" : "max-w-md"}`}
           >
-            <div className="flex items-center justify-between p-6 border-b border-border">
-              <h2 className="text-3xl text-primary font-serif">
-                {step === "cart" ? "Your Cart" : "Checkout"}
-              </h2>
-              <button onClick={onClose} className="p-2 text-muted-foreground hover:text-foreground transition-colors">
-                <X className="w-6 h-6" />
+            {/* Header */}
+            <div className="flex items-center justify-between px-6 py-4 border-b border-border/50 shrink-0">
+              <div className="flex items-center gap-3">
+                {step === "checkout" && (
+                  <button onClick={() => setStep("cart")} className="p-1.5 text-muted-foreground hover:text-white transition-colors rounded-full hover:bg-white/5">
+                    <ChevronDown className="w-5 h-5 rotate-90" />
+                  </button>
+                )}
+                <h2 className="text-2xl font-serif text-primary">
+                  {step === "cart" ? "Your Cart" : "Checkout"}
+                </h2>
+              </div>
+              <button onClick={onClose} data-testid="cart-close" className="p-2 text-muted-foreground hover:text-white transition-colors rounded-full hover:bg-white/5">
+                <X className="w-5 h-5" />
               </button>
             </div>
 
-            <div className="flex-1 overflow-y-auto p-6">
+            {/* Body */}
+            <div className="flex-1 overflow-y-auto">
               {quantity === 0 ? (
-                <div className="h-full flex flex-col items-center justify-center text-center opacity-50">
-                  <ShoppingBag className="w-16 h-16 mb-4" />
+                <div className="h-full flex flex-col items-center justify-center text-center p-8 opacity-40">
+                  <ShoppingBag className="w-14 h-14 mb-4" />
                   <p className="text-xl font-serif">Your cart is empty</p>
+                  <p className="text-sm text-muted-foreground mt-2">Add the Beard Nourishing Serum to continue</p>
                 </div>
-              ) : (
-                <>
-                  {step === "cart" ? (
-                    <div className="space-y-6">
-                      <div className="flex gap-4 items-center bg-background p-4 rounded-xl border border-border/50">
-                        <div className="w-20 h-20 bg-card rounded-lg flex items-center justify-center overflow-hidden">
-                          <img src={heroProductImg} alt="Serum" className="h-full object-cover" />
-                        </div>
-                        <div className="flex-1">
-                          <h3 className="font-serif text-xl text-white">Beard Nourishing Serum</h3>
-                          <p className="text-primary font-medium text-sm">Rs. 1,499</p>
-                        </div>
-                        <div className="flex items-center gap-3 border border-border/50 rounded-full px-2 py-1 bg-card">
-                          <button onClick={() => setQuantity(Math.max(0, quantity - 1))} className="p-1 text-muted-foreground hover:text-white"><Minus className="w-4 h-4" /></button>
-                          <span className="w-4 text-center text-white font-medium">{quantity}</span>
-                          <button onClick={() => setQuantity(quantity + 1)} className="p-1 text-muted-foreground hover:text-white"><Plus className="w-4 h-4" /></button>
-                        </div>
+              ) : step === "cart" ? (
+                /* ── CART STEP ── */
+                <div className="p-6 space-y-5">
+                  {/* Product row */}
+                  <div className="flex gap-4 items-center bg-background/60 backdrop-blur-sm p-4 rounded-2xl border border-border/40">
+                    <div className="w-20 h-20 bg-card rounded-xl overflow-hidden shrink-0 border border-border/30">
+                      <img src={heroProductImg} alt="Serum" className="w-full h-full object-cover" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-white font-semibold text-base leading-tight">Beard Nourishing Serum</h3>
+                      <p className="text-primary text-sm font-medium mt-0.5">PKR 1,499 / unit</p>
+                    </div>
+                    <div className="flex items-center gap-2 border border-border/50 rounded-full px-2 py-1 bg-background/50 shrink-0">
+                      <button data-testid="cart-minus" onClick={() => setQuantity(Math.max(0, quantity - 1))} className="w-7 h-7 flex items-center justify-center text-muted-foreground hover:text-white rounded-full hover:bg-white/10 transition-all">
+                        <Minus className="w-3.5 h-3.5" />
+                      </button>
+                      <span className="w-5 text-center text-white font-semibold text-sm">{quantity}</span>
+                      <button data-testid="cart-plus" onClick={() => setQuantity(quantity + 1)} className="w-7 h-7 flex items-center justify-center text-muted-foreground hover:text-white rounded-full hover:bg-white/10 transition-all">
+                        <Plus className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Order summary */}
+                  <div className="bg-background/60 backdrop-blur-sm border border-primary/15 rounded-2xl p-5">
+                    <h3 className="font-serif text-primary text-base uppercase tracking-widest mb-4">Order Summary</h3>
+                    <div className="space-y-3 mb-4">
+                      <div className="flex justify-between text-sm">
+                        <span className="text-muted-foreground">Beard Nourishing Serum × {quantity}</span>
+                        <span className="text-white font-medium">PKR {total.toLocaleString()}</span>
                       </div>
-                      
-                      <div className="pt-6 border-t border-border/50 space-y-2">
-                        <div className="flex justify-between text-muted-foreground">
-                          <span>Subtotal</span>
-                          <span>Rs. {total.toLocaleString()}</span>
-                        </div>
-                        <div className="flex justify-between text-2xl font-serif text-white pt-4 border-t border-border/50">
-                          <span>Total</span>
-                          <span className="text-primary">Rs. {total.toLocaleString()}</span>
-                        </div>
+                      <div className="flex justify-between text-sm">
+                        <span className="text-muted-foreground">Subtotal</span>
+                        <span className="text-white">PKR {total.toLocaleString()}</span>
+                      </div>
+                      <div className="flex justify-between text-sm">
+                        <span className="text-muted-foreground">Delivery Fee</span>
+                        <span className="text-green-400 font-semibold">FREE</span>
                       </div>
                     </div>
-                  ) : (
-                    <form id="checkout-form" onSubmit={handleConfirmOrder} className="space-y-4">
-                      <div className="space-y-2">
-                        <label className="text-sm font-medium text-muted-foreground">Full Name</label>
-                        <input 
-                          required
-                          type="text" 
-                          value={formData.name}
-                          onChange={e => setFormData(p => ({ ...p, name: e.target.value }))}
-                          className="w-full bg-background border border-border/50 p-3 rounded-xl text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <label className="text-sm font-medium text-muted-foreground">Phone Number</label>
-                        <input 
-                          required
-                          type="tel" 
-                          value={formData.phone}
-                          onChange={e => setFormData(p => ({ ...p, phone: e.target.value }))}
-                          className="w-full bg-background border border-border/50 p-3 rounded-xl text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <label className="text-sm font-medium text-muted-foreground">Delivery Address</label>
-                        <textarea 
-                          required
-                          rows={3}
-                          value={formData.address}
-                          onChange={e => setFormData(p => ({ ...p, address: e.target.value }))}
-                          className="w-full bg-background border border-border/50 p-3 rounded-xl text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all resize-none"
-                        />
-                      </div>
-                    </form>
-                  )}
-                </>
+                    <div className="flex justify-between items-center pt-3 border-t border-border/40">
+                      <span className="text-white font-semibold uppercase tracking-wider text-sm">Total</span>
+                      <span className="text-primary font-bold text-xl">PKR {total.toLocaleString()}</span>
+                    </div>
+                  </div>
+
+                  <TrustList />
+                </div>
+              ) : (
+                /* ── CHECKOUT STEP ── */
+                <div className="p-5 sm:p-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    {/* Left: Form */}
+                    <div>
+                      <p className="text-muted-foreground text-xs uppercase tracking-widest font-semibold mb-4">Delivery Details</p>
+                      <form id="checkout-form" onSubmit={handleConfirmOrder} className="space-y-4">
+                        <div className="space-y-1.5">
+                          <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Full Name</label>
+                          <input
+                            required type="text"
+                            value={formData.name}
+                            onChange={e => setFormData(p => ({ ...p, name: e.target.value }))}
+                            placeholder="Enter your full name"
+                            data-testid="input-name"
+                            className={inputCls}
+                          />
+                        </div>
+                        <div className="space-y-1.5">
+                          <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Phone Number</label>
+                          <input
+                            required type="tel"
+                            value={formData.phone}
+                            onChange={e => setFormData(p => ({ ...p, phone: e.target.value }))}
+                            placeholder="03XX-XXXXXXX"
+                            data-testid="input-phone"
+                            className={inputCls}
+                          />
+                        </div>
+                        <div className="space-y-1.5">
+                          <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Delivery Address</label>
+                          <textarea
+                            required rows={3}
+                            value={formData.address}
+                            onChange={e => setFormData(p => ({ ...p, address: e.target.value }))}
+                            placeholder="House #, Street, City"
+                            data-testid="input-address"
+                            className={`${inputCls} resize-none`}
+                          />
+                        </div>
+                      </form>
+                    </div>
+
+                    {/* Right: Order summary + trust */}
+                    <div className="flex flex-col gap-4">
+                      <OrderSummaryCard quantity={quantity} compact />
+                      <TrustList />
+                    </div>
+                  </div>
+                </div>
               )}
             </div>
 
+            {/* Footer CTA */}
             {quantity > 0 && (
-              <div className="p-6 border-t border-border/50 bg-background/50">
+              <div className="p-5 sm:p-6 border-t border-border/50 bg-background/30 shrink-0">
                 {step === "cart" ? (
                   <button
+                    data-testid="btn-proceed-checkout"
                     onClick={() => setStep("checkout")}
-                    className="w-full bg-white text-black font-semibold rounded-full text-lg py-4 hover:bg-white/90 transition-colors"
+                    className="w-full bg-white text-black font-semibold rounded-full text-base py-4 hover:bg-white/90 transition-all active:scale-[0.98]"
                   >
                     Proceed to Checkout
                   </button>
                 ) : (
-                  <div className="flex gap-4">
-                    <button
-                      onClick={() => setStep("cart")}
-                      type="button"
-                      className="w-1/3 border border-border/50 text-white rounded-full font-medium py-4 hover:bg-white/5 transition-colors"
-                    >
-                      Back
-                    </button>
-                    <button
-                      type="submit"
-                      form="checkout-form"
-                      disabled={isSubmitting}
-                      className="w-2/3 bg-primary text-black rounded-full font-semibold py-4 hover:bg-primary/90 transition-colors disabled:opacity-50"
-                    >
-                      {isSubmitting ? "Processing..." : "Confirm Order"}
-                    </button>
-                  </div>
+                  <button
+                    type="submit" form="checkout-form"
+                    data-testid="btn-confirm-order"
+                    disabled={isSubmitting}
+                    className="w-full bg-primary text-black rounded-full font-bold py-4 text-base hover:bg-primary/90 transition-all active:scale-[0.98] disabled:opacity-50 uppercase tracking-wide"
+                  >
+                    {isSubmitting ? "Processing..." : "Confirm Order via WhatsApp"}
+                  </button>
                 )}
               </div>
             )}
@@ -726,6 +850,7 @@ function Main() {
 
   return (
     <div className="min-h-screen bg-background text-foreground selection:bg-primary/30 font-sans">
+      <AnnouncementBar />
       <Navbar onOrderNow={handleOrderNow} />
       
       <main>
