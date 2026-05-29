@@ -8,7 +8,7 @@ import {
   Leaf, Circle, CheckCircle, Zap, Check,
   Star, ChevronDown, ChevronUp, Instagram
 } from "lucide-react";
-import heroProductImg from "./assets/hero-product.png";
+import heroProductImg from "./assets/hero-product.jpeg";
 
 const queryClient = new QueryClient();
 
