@@ -937,6 +937,7 @@ function CartSidebar({
     try {
       await fetch("https://script.google.com/macros/s/AKfycbxZ7y9-fPjf_muIyxmgridjsD340gHIUbNqkXe6-Y5fWK1X_8dVINuaAcTQyQdw2Rs/exec", {
         method: "POST",
+        mode: "no-cors",
         body: JSON.stringify({ ...formData, quantity, total }),
       });
     } catch (_) { /* ignore */ }
