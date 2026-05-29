@@ -315,25 +315,115 @@ function Ingredients() {
 
 // 6. BEFORE & AFTER
 function BeforeAfter() {
+  const beforeItems = [
+    "Patchy & Uneven Growth",
+    "Dry, Brittle Hair",
+    "Itchy, Flaky Skin",
+    "Dull & Lifeless Look",
+    "Hard to Style",
+  ];
+  const afterItems = [
+    "Full, Dense Coverage",
+    "Soft & Nourished Hair",
+    "Moisturised, Calm Skin",
+    "Natural Healthy Shine",
+    "Easy to Shape & Style",
+  ];
+
   return (
     <section className="py-16 sm:py-24 px-4 sm:px-6">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-5xl mx-auto">
         <FadeIn className="text-center mb-10 sm:mb-16">
           <span className="text-primary uppercase tracking-[0.2em] text-xs sm:text-sm font-semibold block mb-3 sm:mb-4">
-            RESULTS SECTION
+            THE TRANSFORMATION
           </span>
           <h2 className="text-4xl sm:text-5xl md:text-7xl font-serif text-white">Before & After</h2>
+          <p className="text-muted-foreground mt-4 text-sm sm:text-base max-w-xl mx-auto">Results seen within 4 weeks of consistent daily use</p>
         </FadeIn>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-8">
-          <FadeIn className="bg-card rounded-2xl aspect-[4/3] border border-border/50 relative overflow-hidden flex items-center justify-center">
-            <span className="absolute top-4 left-4 text-white/50 text-sm uppercase tracking-wider font-semibold">Before</span>
-            <span className="text-muted-foreground/30 font-serif text-2xl">Placeholder</span>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+          {/* BEFORE */}
+          <FadeIn>
+            <div className="relative rounded-2xl border border-border/50 overflow-hidden bg-zinc-900/80">
+              {/* Visual header */}
+              <div className="relative h-48 sm:h-56 bg-gradient-to-br from-zinc-800 to-zinc-950 flex items-center justify-center overflow-hidden">
+                <div className="absolute inset-0 opacity-10" style={{ backgroundImage: "repeating-linear-gradient(45deg, #ffffff 0, #ffffff 1px, transparent 0, transparent 50%)", backgroundSize: "12px 12px" }} />
+                <div className="text-center z-10">
+                  <div className="w-20 h-20 rounded-full bg-zinc-700/60 border-2 border-zinc-600 mx-auto mb-3 flex items-center justify-center">
+                    <span className="text-4xl">😔</span>
+                  </div>
+                  <p className="text-zinc-400 text-sm font-medium uppercase tracking-widest">Week 0</p>
+                </div>
+                {/* Grayscale tint overlay */}
+                <div className="absolute inset-0 bg-zinc-900/30" />
+              </div>
+              {/* Label pill */}
+              <div className="absolute top-4 left-4 bg-zinc-700/90 backdrop-blur-sm text-white text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full border border-zinc-600">
+                Before
+              </div>
+              {/* Items */}
+              <div className="p-5 sm:p-6 space-y-3">
+                {beforeItems.map((item, i) => (
+                  <div key={i} className="flex items-center gap-3 text-sm text-zinc-400">
+                    <div className="w-5 h-5 rounded-full bg-zinc-700 border border-zinc-600 flex items-center justify-center shrink-0">
+                      <X className="w-3 h-3 text-zinc-500" />
+                    </div>
+                    {item}
+                  </div>
+                ))}
+              </div>
+            </div>
           </FadeIn>
-          <FadeIn className="bg-card rounded-2xl aspect-[4/3] border border-border/50 relative overflow-hidden flex items-center justify-center">
-            <span className="absolute top-4 left-4 text-white/50 text-sm uppercase tracking-wider font-semibold">After</span>
-            <span className="text-muted-foreground/30 font-serif text-2xl">Placeholder</span>
+
+          {/* AFTER */}
+          <FadeIn>
+            <div className="relative rounded-2xl border border-primary/30 overflow-hidden bg-zinc-900/80">
+              {/* Visual header */}
+              <div className="relative h-48 sm:h-56 bg-gradient-to-br from-amber-950/60 via-stone-900 to-zinc-950 flex items-center justify-center overflow-hidden">
+                <div className="absolute inset-0 bg-primary/5" />
+                <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-primary/10 to-transparent" />
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 bg-primary/20 rounded-full blur-3xl pointer-events-none" />
+                <div className="text-center z-10">
+                  <div className="w-20 h-20 rounded-full bg-primary/20 border-2 border-primary/50 mx-auto mb-3 flex items-center justify-center">
+                    <span className="text-4xl">😎</span>
+                  </div>
+                  <p className="text-primary text-sm font-medium uppercase tracking-widest">Week 4</p>
+                </div>
+              </div>
+              {/* Label pill */}
+              <div className="absolute top-4 left-4 bg-primary/90 backdrop-blur-sm text-black text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full">
+                After
+              </div>
+              {/* Items */}
+              <div className="p-5 sm:p-6 space-y-3">
+                {afterItems.map((item, i) => (
+                  <div key={i} className="flex items-center gap-3 text-sm text-white">
+                    <div className="w-5 h-5 rounded-full bg-primary/20 border border-primary/50 flex items-center justify-center shrink-0">
+                      <Check className="w-3 h-3 text-primary" />
+                    </div>
+                    {item}
+                  </div>
+                ))}
+              </div>
+            </div>
           </FadeIn>
         </div>
+
+        {/* Week timeline */}
+        <FadeIn className="mt-8 sm:mt-12 grid grid-cols-4 gap-3">
+          {[
+            { week: "Week 1", result: "Skin feels moisturised" },
+            { week: "Week 2", result: "Reduced itchiness" },
+            { week: "Week 3", result: "Noticeably softer beard" },
+            { week: "Week 4", result: "Fuller, healthier growth" },
+          ].map((w, i) => (
+            <div key={i} className="text-center p-3 sm:p-4 rounded-xl bg-card border border-border/40">
+              <div className="w-2 h-2 rounded-full bg-primary mx-auto mb-2" />
+              <p className="text-primary text-xs font-bold uppercase tracking-wider mb-1">{w.week}</p>
+              <p className="text-muted-foreground text-[10px] sm:text-xs leading-tight">{w.result}</p>
+            </div>
+          ))}
+        </FadeIn>
       </div>
     </section>
   );
@@ -341,10 +431,43 @@ function BeforeAfter() {
 
 // 7. COMMUNITY REELS
 function CommunityReels() {
+  const reels = [
+    {
+      user: "@abdullahbeard_pk",
+      handle: "Abdullah Malik",
+      caption: "Week 4 with Nourea Naturals 🔥 Can't believe the difference bro",
+      views: "67.4K",
+      likes: "4.2K",
+      gradient: "from-amber-950 via-stone-900 to-zinc-950",
+      accent: "from-amber-800/40 to-transparent",
+      tag: "TRENDING",
+    },
+    {
+      user: "@muhammadali_grooming",
+      handle: "Muhammad Ali",
+      caption: "This serum is actually goated 🧔‍♂️ Pakistani men are finally levelling up",
+      views: "45.1K",
+      likes: "3.1K",
+      gradient: "from-yellow-950 via-zinc-900 to-stone-950",
+      accent: "from-yellow-800/30 to-transparent",
+      tag: "TOP PICK",
+    },
+    {
+      user: "@grooming.pk",
+      handle: "Grooming PK",
+      caption: "My honest 30-day review of Nourea Naturals Beard Serum 💯",
+      views: "23.8K",
+      likes: "1.8K",
+      gradient: "from-orange-950 via-neutral-900 to-zinc-950",
+      accent: "from-orange-800/25 to-transparent",
+      tag: "REVIEW",
+    },
+  ];
+
   return (
     <section className="py-16 sm:py-24 px-4 sm:px-6 bg-card border-y border-border/50">
-      <div className="max-w-7xl mx-auto">
-        <FadeIn className="mb-10 sm:mb-16 text-center lg:text-left">
+      <div className="max-w-5xl mx-auto">
+        <FadeIn className="mb-10 sm:mb-16 text-center">
           <span className="text-primary uppercase tracking-[0.2em] text-xs sm:text-sm font-semibold block mb-3 sm:mb-4">
             COMMUNITY REELS
           </span>
@@ -352,15 +475,70 @@ function CommunityReels() {
             Real Customers.<br />Real Results.
           </h2>
         </FadeIn>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
-          {[1,2,3].map(i => (
+
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5">
+          {reels.map((reel, i) => (
             <FadeIn key={i}>
-              <div className="bg-background/50 rounded-xl aspect-[9/16] border border-border/50 flex items-center justify-center">
-                <span className="text-muted-foreground/30 font-serif text-xl">Reel {i}</span>
+              <div className={`relative rounded-2xl aspect-[9/16] bg-gradient-to-b ${reel.gradient} border border-border/40 overflow-hidden group cursor-pointer`}>
+                {/* Noise texture overlay */}
+                <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")" }} />
+
+                {/* Glow from bottom */}
+                <div className={`absolute bottom-0 left-0 right-0 h-2/3 bg-gradient-to-t ${reel.accent}`} />
+
+                {/* Top bar */}
+                <div className="absolute top-0 left-0 right-0 p-3 flex items-center justify-between z-10">
+                  <span className="bg-primary/90 text-black text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded-full">{reel.tag}</span>
+                  <div className="flex items-center gap-1 bg-black/40 backdrop-blur-sm rounded-full px-2 py-1">
+                    <div className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
+                    <span className="text-white text-[10px] font-semibold">{reel.views} views</span>
+                  </div>
+                </div>
+
+                {/* Centre play button */}
+                <div className="absolute inset-0 flex items-center justify-center z-10">
+                  <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white/15 backdrop-blur-md border border-white/30 flex items-center justify-center group-hover:scale-110 group-hover:bg-white/25 transition-all duration-300 shadow-2xl">
+                    {/* Play triangle */}
+                    <div className="w-0 h-0 ml-1" style={{ borderTop: "9px solid transparent", borderBottom: "9px solid transparent", borderLeft: "16px solid white" }} />
+                  </div>
+                </div>
+
+                {/* Simulated video progress bar */}
+                <div className="absolute bottom-20 left-3 right-3 z-10">
+                  <div className="h-0.5 bg-white/20 rounded-full overflow-hidden">
+                    <div className="h-full bg-primary rounded-full" style={{ width: `${30 + i * 20}%` }} />
+                  </div>
+                </div>
+
+                {/* Bottom user info */}
+                <div className="absolute bottom-0 left-0 right-0 p-4 z-10 bg-gradient-to-t from-black/80 to-transparent">
+                  <div className="flex items-end justify-between gap-2">
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-1.5">
+                        <div className="w-7 h-7 rounded-full bg-primary/30 border border-primary/60 flex items-center justify-center shrink-0">
+                          <span className="text-xs font-bold text-primary">{reel.handle[0]}</span>
+                        </div>
+                        <span className="text-white text-xs font-semibold truncate">{reel.user}</span>
+                      </div>
+                      <p className="text-white/80 text-[11px] leading-tight line-clamp-2">{reel.caption}</p>
+                    </div>
+                    {/* Like count */}
+                    <div className="flex flex-col items-center gap-0.5 shrink-0">
+                      <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
+                        <Star className="w-4 h-4 fill-primary text-primary" />
+                      </div>
+                      <span className="text-white text-[10px] font-semibold">{reel.likes}</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </FadeIn>
           ))}
         </div>
+
+        <FadeIn className="mt-8 text-center">
+          <p className="text-muted-foreground text-sm">Share your journey <span className="text-primary font-semibold">#NoureaBeardJourney</span></p>
+        </FadeIn>
       </div>
     </section>
   );
@@ -486,9 +664,66 @@ function FAQ() {
 
 // 11. INSTAGRAM FEED
 function InstagramFeed() {
+  const posts = [
+    {
+      gradient: "from-amber-900/70 via-stone-800 to-zinc-900",
+      glow: "from-amber-700/30",
+      emoji: "🧔‍♂️",
+      caption: "Morning ritual sorted. 3 drops is all you need.",
+      likes: "1,284",
+      time: "2d",
+      tag: "BEARD CARE",
+    },
+    {
+      gradient: "from-yellow-900/60 via-amber-950 to-zinc-900",
+      glow: "from-yellow-700/25",
+      emoji: "✨",
+      caption: "That post-serum shine hits different fr.",
+      likes: "987",
+      time: "4d",
+      tag: "GLOW UP",
+    },
+    {
+      gradient: "from-orange-950/70 via-stone-900 to-neutral-950",
+      glow: "from-orange-800/20",
+      emoji: "💪",
+      caption: "Week 3 update. The itchiness is completely gone.",
+      likes: "2,103",
+      time: "6d",
+      tag: "RESULTS",
+    },
+    {
+      gradient: "from-amber-950/80 via-zinc-800 to-stone-950",
+      glow: "from-amber-900/30",
+      emoji: "🌿",
+      caption: "Pure botanical. No chemicals. That's Nourea.",
+      likes: "756",
+      time: "1w",
+      tag: "NATURAL",
+    },
+    {
+      gradient: "from-yellow-950/60 via-neutral-900 to-zinc-950",
+      glow: "from-yellow-800/20",
+      emoji: "🔥",
+      caption: "Pakistani men are sleeping on good grooming no cap.",
+      likes: "3,441",
+      time: "1w",
+      tag: "TRENDING",
+    },
+    {
+      gradient: "from-stone-900 via-amber-950/50 to-zinc-950",
+      glow: "from-stone-700/20",
+      emoji: "🧴",
+      caption: "Sandalwood scent is unreal. Smells luxurious.",
+      likes: "1,567",
+      time: "2w",
+      tag: "SCENT",
+    },
+  ];
+
   return (
     <section className="py-16 sm:py-24 px-4 sm:px-6 bg-card border-y border-border/50">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-5xl mx-auto">
         <FadeIn className="text-center mb-10 sm:mb-16">
           <span className="text-primary uppercase tracking-[0.2em] text-xs sm:text-sm font-semibold block mb-3 sm:mb-4">
             INSTAGRAM FEED
@@ -496,16 +731,67 @@ function InstagramFeed() {
           <h2 className="text-4xl sm:text-5xl md:text-7xl font-serif text-white leading-none">
             Follow The<br />Brotherhood
           </h2>
+          <a
+            href="https://instagram.com/noureanaturals"
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-2 mt-5 text-primary text-sm font-semibold hover:underline"
+          >
+            <Instagram className="w-4 h-4" />
+            @noureanaturals
+          </a>
         </FadeIn>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
-          {[1,2,3,4].map(i => (
+
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
+          {posts.map((post, i) => (
             <FadeIn key={i}>
-              <div className="bg-background/50 rounded-xl aspect-square border border-border/50 flex flex-col items-center justify-center gap-2 group hover:border-primary/50 transition-colors cursor-pointer">
-                <Instagram className="w-7 h-7 sm:w-8 sm:h-8 text-muted-foreground/30 group-hover:text-primary transition-colors" />
+              <div className={`relative rounded-2xl aspect-square bg-gradient-to-br ${post.gradient} border border-border/40 overflow-hidden group cursor-pointer hover:border-primary/40 transition-all duration-300`}>
+                {/* Glow accent */}
+                <div className={`absolute top-0 left-0 right-0 h-1/2 bg-gradient-to-b ${post.glow} to-transparent opacity-60`} />
+
+                {/* Tag */}
+                <div className="absolute top-3 left-3 z-10">
+                  <span className="bg-black/50 backdrop-blur-sm text-primary text-[9px] sm:text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded-full border border-primary/30">
+                    {post.tag}
+                  </span>
+                </div>
+
+                {/* Instagram icon top-right */}
+                <div className="absolute top-3 right-3 z-10">
+                  <div className="w-7 h-7 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center">
+                    <Instagram className="w-3.5 h-3.5 text-white/70" />
+                  </div>
+                </div>
+
+                {/* Centre emoji */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <span className="text-4xl sm:text-5xl group-hover:scale-110 transition-transform duration-300 drop-shadow-lg">{post.emoji}</span>
+                </div>
+
+                {/* Bottom overlay */}
+                <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/80 via-black/40 to-transparent">
+                  <p className="text-white text-[10px] sm:text-xs leading-tight line-clamp-2 mb-2">{post.caption}</p>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-1">
+                      <Star className="w-3 h-3 fill-primary text-primary" />
+                      <span className="text-primary text-[10px] font-bold">{post.likes}</span>
+                    </div>
+                    <span className="text-white/40 text-[10px]">{post.time}</span>
+                  </div>
+                </div>
+
+                {/* Hover overlay */}
+                <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </div>
             </FadeIn>
           ))}
         </div>
+
+        <FadeIn className="mt-8 text-center">
+          <p className="text-muted-foreground text-sm">
+            Tag us with <span className="text-primary font-semibold">#NoureaBeardJourney</span> to be featured
+          </p>
+        </FadeIn>
       </div>
     </section>
   );
