@@ -1,8 +1,13 @@
 uploads = []
-outputs = []
 
 [[generated]]
 id = "zNhsDeVE3u6U47aBl25i8"
 uri = "file://artifacts/nourea-naturals/src/assets/hero-product.png"
 type = "image"
 title = "NOUREA NATURALS Beard Serum Bottle"
+
+[[outputs]]
+id = "YkWhm1bxj-nBILxpnv8Fk"
+uri = "file://nourea-naturals.tar.gz"
+type = "unspecified"
+title = "Nourea Naturals — Source Files"
