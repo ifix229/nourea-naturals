@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "Nourea Naturals"
+version = "1.0.0"
+id = "artifacts/nourea-naturals"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 25592
+
+[services.development]
+run = "pnpm --filter @workspace/nourea-naturals run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/nourea-naturals", "run", "build" ]
+publicDir = "artifacts/nourea-naturals/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "25592"
+BASE_PATH = "/"

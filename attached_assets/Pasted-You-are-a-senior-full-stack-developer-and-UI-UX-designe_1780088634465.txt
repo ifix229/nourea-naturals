@@ -1,0 +1,119 @@
+You are a senior full-stack developer and UI/UX designer.
+
+Build a complete premium ecommerce website for a brand called:
+
+NOUREA NATURALS
+
+Product:
+Beard Nourishing Serum (single product store)
+
+Target audience:
+Modern Gen-Z men (luxury grooming / skincare brand feel like Dior, Aesop, The Ordinary)
+
+---
+
+TECH REQUIREMENTS:
+- Use HTML, CSS, JavaScript (no frameworks required)
+- Must be mobile responsive
+- Must look ultra premium / luxury skincare brand level
+- Smooth animations and micro-interactions required
+- Clean modern typography (use Bebas Neue + Inter fonts)
+- Black + gold color theme with subtle white accents
+
+---
+
+MAIN FEATURES (VERY IMPORTANT):
+
+1. PRODUCT LANDING PAGE
+- Hero section with premium branding
+- Product name: Beard Nourishing Serum
+- Full product details included:
+  Ingredients:
+  - Jojoba Oil
+  - Olive Oil
+  - Castor Oil
+  - Rosemary Oil
+  - Vitamin E
+  - Sandalwood Essential Oil
+
+  Benefits:
+  - Softens beard
+  - Deep moisturization
+  - Reduces itchiness
+  - Supports healthy beard growth
+  - Adds natural shine
+
+  Directions:
+  Apply 3–5 drops daily and massage into beard roots and skin.
+
+  Tagline:
+  “Nature’s Finest for a Modern Man”
+
+  Made in Pakistan must be included
+
+---
+
+2. ADD TO CART SYSTEM
+- Button: Add to Cart
+- Cart sidebar opens from right
+- Show quantity increase/decrease buttons
+- Auto calculate total price (PKR 1499 per item)
+
+---
+
+3. CHECKOUT FLOW (MULTI STEP)
+Flow must be:
+Shop Page → Cart → Checkout Page
+
+Checkout page:
+- Input fields:
+  Name
+  Phone
+  Address
+
+- Confirm Order button
+
+---
+
+4. ORDER FUNCTIONALITY
+When user confirms order:
+
+A) Open WhatsApp with pre-filled message:
+Include:
+- Name
+- Phone
+- Address
+- Quantity
+- Total price
+
+WhatsApp number:
++923198615519
+
+B) Send same data to Google Sheets using fetch POST request:
+Placeholder:
+YOUR_GOOGLE_SCRIPT_URL
+
+---
+
+5. UI/UX REQUIREMENTS:
+- Ultra premium skincare brand design
+- Smooth fade/slide animations
+- Hover effects on cards and buttons
+- Glassmorphism cart sidebar
+- Luxury feel like Apple / Dior websites
+- No clutter, very clean layout
+- Strong typography hierarchy
+
+---
+
+6. EXTRA FEATURES:
+- Toast notification when item added to cart
+- Smooth page transitions (no reload)
+- Sticky navigation with blur effect
+- Animated product hero section (floating effect)
+
+---
+
+OUTPUT:
+Provide complete working code in a single HTML file with internal CSS and JavaScript.
+No external backend required except WhatsApp + Google Sheets integration placeholders.
