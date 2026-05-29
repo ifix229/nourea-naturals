@@ -11,3 +11,9 @@ id = "YkWhm1bxj-nBILxpnv8Fk"
 uri = "file://nourea-naturals.tar.gz"
 type = "unspecified"
 title = "Nourea Naturals — Source Files"
+
+[[outputs]]
+id = "lcxS_ahGjLtfDCC8HXXfo"
+uri = "file://nourea-naturals.zip"
+type = "unspecified"
+title = "Nourea Naturals — Source Code"
