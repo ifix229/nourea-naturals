@@ -1081,6 +1081,21 @@ function CartSidebar({
                             className={`${inputCls} resize-none`}
                           />
                         </div>
+
+                        {/* Payment Method */}
+                        <div className="space-y-1.5">
+                          <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Payment Method</label>
+                          <div className="flex items-center gap-3 bg-primary/10 border border-primary/40 rounded-xl px-4 py-3 cursor-default select-none">
+                            <div className="w-5 h-5 rounded-full border-2 border-primary flex items-center justify-center shrink-0">
+                              <div className="w-2.5 h-2.5 rounded-full bg-primary" />
+                            </div>
+                            <div className="flex-1">
+                              <p className="text-white text-sm font-semibold leading-tight">Cash on Delivery</p>
+                              <p className="text-muted-foreground text-[11px] mt-0.5">Pay when your order arrives at your door</p>
+                            </div>
+                            <span className="text-[10px] font-bold text-black bg-primary px-2 py-0.5 rounded-full uppercase tracking-widest shrink-0">COD</span>
+                          </div>
+                        </div>
                       </form>
                     </div>
 
