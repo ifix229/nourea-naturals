@@ -1,0 +1,81 @@
+3:35:28 AM: Netlify Build                                                 
+3:35:28 AM: ────────────────────────────────────────────────────────────────
+3:35:28 AM: ​
+3:35:28 AM: ❯ Version
+3:35:28 AM:   @netlify/build 35.13.8
+3:35:28 AM: ​
+3:35:28 AM: ❯ Flags
+3:35:28 AM:   accountId: 68a6ed380d8968354f2e2234
+3:35:28 AM:   baseRelDir: true
+3:35:28 AM:   buildId: 6a1a149ccfa15c125b4ffaac
+3:35:28 AM:   deployId: 6a1a149ccfa15c125b4ffaae
+3:35:28 AM: ​
+3:35:28 AM: ❯ Current directory
+3:35:28 AM:   /opt/build/repo
+3:35:28 AM: ​
+3:35:28 AM: ❯ Config file
+3:35:28 AM:   /opt/build/repo/netlify.toml
+3:35:28 AM: ​
+3:35:28 AM: ❯ Context
+3:35:28 AM:   production
+3:35:28 AM: ​
+3:35:28 AM: ❯ Installing extensions
+3:35:28 AM:    - neon
+3:35:41 AM: ​
+3:35:41 AM: ❯ Loading extensions
+3:35:41 AM:    - neon
+3:35:42 AM: ​
+3:35:42 AM: build.command from netlify.toml                               
+3:35:42 AM: ────────────────────────────────────────────────────────────────
+3:35:42 AM: ​
+3:35:42 AM: $ npm install && npm run build
+3:35:42 AM: up to date, audited 100 packages in 341ms
+3:35:42 AM: 18 packages are looking for funding
+3:35:42 AM:   run `npm fund` for details
+3:35:42 AM: found 0 vulnerabilities
+3:35:42 AM: > nourea-naturals@0.0.0 build
+3:35:42 AM: > vite build
+3:35:42 AM: ▲ [WARNING] Cannot find base config file "../../tsconfig.base.json" [tsconfig.json]
+3:35:42 AM:     tsconfig.json:2:13:
+3:35:42 AM:       2 │   "extends": "../../tsconfig.base.json",
+3:35:42 AM:         ╵              ~~~~~~~~~~~~~~~~~~~~~~~~~~
+3:35:43 AM: Failed during stage 'building site': Build script returned non-zero exit code: 2
+3:35:42 AM: vite v7.3.3 building client environment for production...
+3:35:42 AM: ✓ 0 modules transformed.
+3:35:42 AM: ✗ Build failed in 36ms
+3:35:42 AM: error during build:
+3:35:42 AM: [vite:build-html] failed to resolve "extends":"../../tsconfig.base.json" in /opt/build/repo/tsconfig.json
+3:35:42 AM: file: /opt/build/repo/index.html
+3:35:42 AM:     at resolveExtends (file:///opt/build/repo/node_modules/vite/dist/node/chunks/config.js:5809:8)
+3:35:42 AM:     at parseExtends (file:///opt/build/repo/node_modules/vite/dist/node/chunks/config.js:5775:71)
+3:35:42 AM:     at parse$13 (file:///opt/build/repo/node_modules/vite/dist/node/chunks/config.js:5677:23)
+3:35:42 AM:     at async loadTsconfigJsonForFile (file:///opt/build/repo/node_modules/vite/dist/node/chunks/config.js:6302:37)
+3:35:42 AM:     at async transformWithEsbuild (file:///opt/build/repo/node_modules/vite/dist/node/chunks/config.js:6086:55)
+3:35:42 AM:     at async Object.transform (file:///opt/build/repo/node_modules/vite/dist/node/chunks/config.js:6172:20)
+3:35:42 AM:     at async transform (file:///opt/build/repo/node_modules/rollup/dist/es/shared/node-entry.js:21678:16)
+3:35:42 AM:     at async ModuleLoader.addModuleSource (file:///opt/build/repo/node_modules/rollup/dist/es/shared/node-entry.js:21906:36)
+3:35:43 AM: ​
+3:35:43 AM: "build.command" failed                                        
+3:35:43 AM: ────────────────────────────────────────────────────────────────
+3:35:43 AM: ​
+3:35:43 AM:   Error message
+3:35:43 AM:   Command failed with exit code 1: npm install && npm run build
+3:35:43 AM: ​
+3:35:43 AM:   Error location
+3:35:43 AM:   In build.command from netlify.toml:
+3:35:43 AM:   npm install && npm run build
+3:35:43 AM: ​
+3:35:43 AM:   Resolved config
+3:35:43 AM:   build:
+3:35:43 AM:     command: npm install && npm run build
+3:35:43 AM:     commandOrigin: config
+3:35:43 AM:     publish: /opt/build/repo/dist
+3:35:43 AM:     publishOrigin: config
+3:35:43 AM:   redirects:
+3:35:43 AM:     - from: /*
+      status: 200
+      to: /index.html
+  redirectsOrigin: config
+3:35:43 AM: Build failed due to a user error: Build script returned non-zero exit code: 2
+3:35:43 AM: Failing build: Failed to build site
+3:35:43 AM: Finished processing build request in 34.225s
