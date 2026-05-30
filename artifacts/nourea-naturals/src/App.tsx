@@ -172,49 +172,96 @@ function Navbar({ onOrderNow }: { onOrderNow: () => void }) {
 // 2. HERO SECTION
 function Hero({ onOrderNow }: { onOrderNow: () => void }) {
   return (
-    <section className="relative min-h-screen flex items-center pt-32 sm:pt-36 pb-8 overflow-hidden">
+    <section className="relative min-h-[100svh] flex items-center pt-24 sm:pt-36 pb-6 overflow-hidden">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/10 rounded-full blur-[120px] pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 w-full grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 items-center z-10">
-        <FadeIn className="flex flex-col items-start space-y-4 sm:space-y-6">
-          <span className="text-primary uppercase tracking-[0.2em] sm:tracking-[0.3em] text-xs sm:text-sm font-semibold">
+      {/* ── DESKTOP layout (lg+): text left, image right ── */}
+      <div className="hidden lg:grid max-w-7xl mx-auto px-6 w-full grid-cols-2 gap-12 items-center z-10">
+        <FadeIn className="flex flex-col items-start space-y-6">
+          <span className="text-primary uppercase tracking-[0.3em] text-sm font-semibold">
             NATURE'S FINEST FOR A MODERN MAN
           </span>
-          <h1 className="text-[13vw] sm:text-7xl lg:text-9xl leading-[0.85] font-serif flex flex-col">
+          <h1 className="text-9xl leading-[0.85] font-serif flex flex-col">
             <span className="text-white">BEARD</span>
             <span className="text-white">NOURISHING</span>
             <span className="text-primary">SERUM</span>
           </h1>
-          <p className="text-base sm:text-lg text-muted-foreground font-light max-w-md leading-relaxed">
+          <p className="text-lg text-muted-foreground font-light max-w-md leading-relaxed">
             Crafted with nourishing botanical oils to support a healthier, softer, and better-looking beard routine for modern men.
           </p>
-          <div className="pt-2 sm:pt-4 flex flex-col items-start gap-3 sm:gap-4 w-full">
-            <button
-              onClick={onOrderNow}
-              data-testid="hero-order-btn"
-              className="bg-white text-black text-base sm:text-xl px-7 sm:px-10 py-3 sm:py-4 rounded-full font-semibold hover:bg-white/90 transition-all duration-300 active:scale-95 w-full sm:w-auto"
-            >
+          <div className="pt-4 flex flex-col items-start gap-4 w-full">
+            <button onClick={onOrderNow} data-testid="hero-order-btn"
+              className="bg-white text-black text-xl px-10 py-4 rounded-full font-semibold hover:bg-white/90 transition-all duration-300 active:scale-95">
               Order Now — Rs. 1,499
             </button>
-            <div className="flex items-center gap-3 sm:gap-4 text-sm text-muted-foreground flex-wrap">
-              <span className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-green-500" />
-                Cruelty Free
-              </span>
+            <div className="flex items-center gap-4 text-sm text-muted-foreground">
+              <span className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-green-500" />Cruelty Free</span>
               <span>•</span>
               <span>Made For Daily Beard Care</span>
             </div>
           </div>
         </FadeIn>
-
-        <FadeIn className="relative flex items-center justify-center lg:justify-end h-[280px] sm:h-[420px] lg:h-[600px]">
+        <FadeIn className="relative flex items-center justify-end h-[600px]">
           <div className="animate-float h-full flex items-center">
+            <img src={heroProductImg} alt="NOUREA NATURALS Beard Nourishing Serum"
+              className="max-h-full w-auto drop-shadow-2xl" data-testid="hero-product-img" />
+          </div>
+        </FadeIn>
+      </div>
+
+      {/* ── MOBILE layout: centered product image + text + CTA ── */}
+      <div className="lg:hidden w-full px-4 z-10 flex flex-col items-center text-center gap-0">
+        {/* Tagline */}
+        <FadeIn>
+          <span className="text-primary uppercase tracking-[0.2em] text-[10px] font-semibold mb-2 block">
+            NATURE'S FINEST FOR A MODERN MAN
+          </span>
+        </FadeIn>
+
+        {/* Product image — center stage on mobile */}
+        <FadeIn className="relative w-full flex items-center justify-center mt-1 mb-0">
+          <div className="absolute w-52 h-52 bg-primary/15 rounded-full blur-3xl pointer-events-none" />
+          <div className="animate-float relative z-10">
             <img
               src={heroProductImg}
               alt="NOUREA NATURALS Beard Nourishing Serum"
-              className="max-h-full w-auto drop-shadow-2xl"
+              className="h-[230px] w-auto drop-shadow-2xl"
               data-testid="hero-product-img"
             />
+          </div>
+        </FadeIn>
+
+        {/* Title */}
+        <FadeIn className="w-full mt-1">
+          <h1 className="text-[16vw] leading-[0.85] font-serif flex flex-col items-center">
+            <span className="text-white">BEARD</span>
+            <span className="text-white">NOURISHING</span>
+            <span className="text-primary">SERUM</span>
+          </h1>
+        </FadeIn>
+
+        {/* Subtitle */}
+        <FadeIn>
+          <p className="text-xs text-muted-foreground font-light mt-2 mb-4 leading-relaxed max-w-[260px] mx-auto">
+            Pure botanical oils for a softer, fuller, better-looking beard.
+          </p>
+        </FadeIn>
+
+        {/* CTA */}
+        <FadeIn className="w-full max-w-xs mx-auto flex flex-col gap-2.5">
+          <button
+            onClick={onOrderNow}
+            data-testid="hero-order-btn"
+            className="bg-white text-black text-base px-8 py-3.5 rounded-full font-bold hover:bg-white/90 transition-all duration-300 active:scale-95 w-full shadow-xl"
+          >
+            Order Now — Rs. 1,499
+          </button>
+          <div className="flex items-center justify-center gap-2.5 text-[11px] text-muted-foreground">
+            <span className="flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full bg-green-500" />Cruelty Free</span>
+            <span>•</span>
+            <span>Free Delivery</span>
+            <span>•</span>
+            <span>COD</span>
           </div>
         </FadeIn>
       </div>
@@ -226,13 +273,13 @@ function Hero({ onOrderNow }: { onOrderNow: () => void }) {
 function TrustBadges() {
   const badges = ["Cruelty Free", "Cash On Delivery", "Premium Oils", "Made In Pakistan"];
   return (
-    <section className="py-8 sm:py-12 bg-card border-y border-border/50">
+    <section className="py-6 sm:py-12 bg-card border-y border-border/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-4">
           {badges.map((badge, idx) => (
             <FadeIn key={idx}>
-              <div className="bg-background/50 border border-border/50 rounded-xl p-4 sm:p-6 flex items-center justify-center text-center">
-                <span className="text-white font-medium text-sm sm:text-base">{badge}</span>
+              <div className="bg-background/50 border border-border/50 rounded-xl p-3 sm:p-6 flex items-center justify-center text-center">
+                <span className="text-white font-medium text-xs sm:text-base">{badge}</span>
               </div>
             </FadeIn>
           ))}
@@ -254,23 +301,34 @@ function Benefits() {
   ];
 
   return (
-    <section id="benefits" className="py-16 sm:py-24 px-4 sm:px-6">
+    <section id="benefits" className="py-10 sm:py-24 px-4 sm:px-6">
       <div className="max-w-7xl mx-auto">
-        <FadeIn className="mb-10 sm:mb-16">
-          <span className="text-primary uppercase tracking-[0.2em] text-xs sm:text-sm font-semibold block mb-3 sm:mb-4">
+        <FadeIn className="mb-6 sm:mb-16">
+          <span className="text-primary uppercase tracking-[0.2em] text-xs sm:text-sm font-semibold block mb-2 sm:mb-4">
             WHY MEN LOVE IT
           </span>
-          <h2 className="text-4xl sm:text-5xl md:text-7xl font-serif text-white leading-none">
+          <h2 className="text-3xl sm:text-5xl md:text-7xl font-serif text-white leading-none">
             Beard Care<br />Reimagined
           </h2>
         </FadeIn>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+        {/* Mobile: horizontal snap scroll */}
+        <div className="flex sm:hidden gap-3 overflow-x-auto snap-x snap-mandatory pb-3 -mx-4 px-4 scrollbar-none">
+          {benefits.map((b, idx) => (
+            <div key={idx} className="snap-start shrink-0 w-[72vw] bg-card rounded-2xl p-5 border border-border/50 flex flex-col gap-3">
+              <div className="text-primary w-8 h-8 flex items-center justify-center bg-primary/10 rounded-xl">{b.icon}</div>
+              <p className="text-white text-sm font-medium leading-snug">{b.text}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Desktop: grid */}
+        <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {benefits.map((b, idx) => (
             <FadeIn key={idx}>
-              <div className="bg-card rounded-xl p-6 sm:p-8 border border-border/50 h-full flex flex-col items-start gap-4 sm:gap-6">
+              <div className="bg-card rounded-xl p-8 border border-border/50 h-full flex flex-col items-start gap-6">
                 <div className="text-primary">{b.icon}</div>
-                <p className="text-white text-base sm:text-lg font-medium">{b.text}</p>
+                <p className="text-white text-lg font-medium">{b.text}</p>
               </div>
             </FadeIn>
           ))}
@@ -285,25 +343,25 @@ function Ingredients() {
   const ingredients = ["Jojoba Oil", "Olive Oil", "Rosemary Oil", "Castor Oil", "Vitamin E", "Sandalwood Essential Oil"];
   
   return (
-    <section id="ingredients" className="py-16 sm:py-24 px-4 sm:px-6 bg-card border-y border-border/50">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-16 items-center">
+    <section id="ingredients" className="py-10 sm:py-24 px-4 sm:px-6 bg-card border-y border-border/50">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-16 items-center">
         <FadeIn>
-          <span className="text-primary uppercase tracking-[0.2em] text-xs sm:text-sm font-semibold block mb-3 sm:mb-4">
+          <span className="text-primary uppercase tracking-[0.2em] text-xs sm:text-sm font-semibold block mb-2 sm:mb-4">
             INFUSED WITH SANDALWOOD
           </span>
-          <h2 className="text-4xl sm:text-5xl md:text-7xl font-serif text-white leading-none mb-4 sm:mb-6">
-            Premium Oils<br />Selected<br />For Modern<br />Beard Care
+          <h2 className="text-3xl sm:text-5xl md:text-7xl font-serif text-white leading-none mb-3 sm:mb-6">
+            Premium Oils<br />For Modern<br />Beard Care
           </h2>
-          <p className="text-base sm:text-lg text-muted-foreground">
+          <p className="text-sm sm:text-lg text-muted-foreground">
             Every ingredient is carefully chosen to support hydration, softness, and a healthier beard care routine.
           </p>
         </FadeIn>
         
-        <div className="grid grid-cols-2 gap-3 sm:gap-4">
+        <div className="grid grid-cols-2 gap-2.5 sm:gap-4">
           {ingredients.map((ing, idx) => (
             <FadeIn key={idx}>
-              <div className="bg-background/80 border border-border/50 rounded-lg p-4 sm:p-6 flex items-center justify-center text-center">
-                <span className="text-white text-sm sm:text-lg font-medium">{ing}</span>
+              <div className="bg-background/80 border border-border/50 rounded-xl p-3 sm:p-6 flex items-center justify-center text-center">
+                <span className="text-white text-xs sm:text-lg font-medium">{ing}</span>
               </div>
             </FadeIn>
           ))}
@@ -465,18 +523,49 @@ function CommunityReels() {
   ];
 
   return (
-    <section className="py-16 sm:py-24 px-4 sm:px-6 bg-card border-y border-border/50">
+    <section className="py-10 sm:py-24 px-4 sm:px-6 bg-card border-y border-border/50">
       <div className="max-w-5xl mx-auto">
-        <FadeIn className="mb-10 sm:mb-16 text-center">
-          <span className="text-primary uppercase tracking-[0.2em] text-xs sm:text-sm font-semibold block mb-3 sm:mb-4">
+        <FadeIn className="mb-6 sm:mb-16 text-center">
+          <span className="text-primary uppercase tracking-[0.2em] text-xs sm:text-sm font-semibold block mb-2 sm:mb-4">
             COMMUNITY REELS
           </span>
-          <h2 className="text-4xl sm:text-5xl md:text-7xl font-serif text-white leading-none">
+          <h2 className="text-3xl sm:text-5xl md:text-7xl font-serif text-white leading-none">
             Real Customers.<br />Real Results.
           </h2>
         </FadeIn>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5">
+        {/* Mobile: horizontal snap scroll */}
+        <div className="flex sm:hidden gap-3 overflow-x-auto snap-x snap-mandatory pb-3 -mx-4 px-4 scrollbar-none">
+          {reels.map((reel, i) => (
+            <div key={i} className={`snap-start shrink-0 w-[58vw] relative rounded-2xl aspect-[9/16] bg-gradient-to-b ${reel.gradient} border border-border/40 overflow-hidden group cursor-pointer`}>
+              <div className={`absolute bottom-0 left-0 right-0 h-2/3 bg-gradient-to-t ${reel.accent}`} />
+              <div className="absolute top-0 left-0 right-0 p-2.5 flex items-center justify-between z-10">
+                <span className="bg-primary/90 text-black text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full">{reel.tag}</span>
+                <div className="flex items-center gap-1 bg-black/40 backdrop-blur-sm rounded-full px-1.5 py-0.5">
+                  <div className="w-1 h-1 rounded-full bg-red-500 animate-pulse" />
+                  <span className="text-white text-[9px] font-semibold">{reel.views}</span>
+                </div>
+              </div>
+              <div className="absolute inset-0 flex items-center justify-center z-10">
+                <div className="w-11 h-11 rounded-full bg-white/15 backdrop-blur-md border border-white/30 flex items-center justify-center">
+                  <div className="w-0 h-0 ml-0.5" style={{ borderTop: "7px solid transparent", borderBottom: "7px solid transparent", borderLeft: "12px solid white" }} />
+                </div>
+              </div>
+              <div className="absolute bottom-0 left-0 right-0 p-3 z-10 bg-gradient-to-t from-black/80 to-transparent">
+                <div className="flex items-center gap-1.5 mb-1">
+                  <div className="w-5 h-5 rounded-full bg-primary/30 border border-primary/60 flex items-center justify-center shrink-0">
+                    <span className="text-[9px] font-bold text-primary">{reel.handle[0]}</span>
+                  </div>
+                  <span className="text-white text-[10px] font-semibold truncate">{reel.user}</span>
+                </div>
+                <p className="text-white/80 text-[10px] leading-tight line-clamp-2">{reel.caption}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Desktop: grid */}
+        <div className="hidden sm:grid sm:grid-cols-3 gap-5">
           {reels.map((reel, i) => (
             <FadeIn key={i}>
               <div className={`relative rounded-2xl aspect-[9/16] bg-gradient-to-b ${reel.gradient} border border-border/40 overflow-hidden group cursor-pointer`}>
@@ -546,29 +635,54 @@ function CommunityReels() {
 
 // 8. REVIEWS
 function Reviews() {
+  const reviews = [
+    { name: "Ali Raza", city: "Lahore", text: "Yaar sach mein kaam karta hai. 3 hafte mein beard soft ho gayi aur itching bilkul band.", stars: 5 },
+    { name: "Usman Khan", city: "Karachi", text: "Best investment for beard care. The sandalwood fragrance is luxurious. COD bhi available hai.", stars: 5 },
+    { name: "Bilal Ahmed", city: "Islamabad", text: "Pehle patchy beard thi, ab full coverage. Highly recommend to every Pakistani man.", stars: 5 },
+    { name: "Hamza Malik", city: "Peshawar", text: "Halka sa lagta hai, chipchipa bilkul nahi. Roz istamal kar raha hoon, results amazing hain.", stars: 5 },
+  ];
+
   return (
-    <section id="reviews" className="py-16 sm:py-24 px-4 sm:px-6">
+    <section id="reviews" className="py-10 sm:py-24 px-4 sm:px-6">
       <div className="max-w-7xl mx-auto">
-        <FadeIn className="text-center mb-10 sm:mb-16">
-          <span className="text-primary uppercase tracking-[0.2em] text-xs sm:text-sm font-semibold block mb-3 sm:mb-4">
+        <FadeIn className="text-center mb-6 sm:mb-16">
+          <span className="text-primary uppercase tracking-[0.2em] text-xs sm:text-sm font-semibold block mb-2 sm:mb-4">
             HONEST REVIEWS
           </span>
-          <h2 className="text-4xl sm:text-5xl md:text-7xl font-serif text-white leading-none">
+          <h2 className="text-3xl sm:text-5xl md:text-7xl font-serif text-white leading-none">
             Trusted By<br />Modern Men
           </h2>
         </FadeIn>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
-          {[1,2,3].map(i => (
+
+        {/* Mobile: horizontal snap scroll */}
+        <div className="flex sm:hidden gap-3 overflow-x-auto snap-x snap-mandatory pb-3 -mx-4 px-4 scrollbar-none">
+          {reviews.map((r, i) => (
+            <div key={i} className="snap-start shrink-0 w-[80vw] bg-card rounded-2xl p-5 border border-primary/20 flex flex-col gap-3">
+              <div className="flex gap-1">
+                {[...Array(r.stars)].map((_, j) => <Star key={j} className="w-3.5 h-3.5 fill-primary text-primary" />)}
+              </div>
+              <p className="text-muted-foreground text-sm leading-relaxed flex-1">"{r.text}"</p>
+              <div className="pt-3 border-t border-border/50 flex items-center justify-between">
+                <span className="text-white font-semibold text-sm">{r.name}</span>
+                <span className="text-muted-foreground text-xs">{r.city}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Desktop: grid */}
+        <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+          {reviews.map((r, i) => (
             <FadeIn key={i}>
-              <div className="bg-card rounded-xl p-6 sm:p-8 border border-border/50 flex flex-col gap-4">
-                <div className="flex items-center gap-2 text-primary text-sm font-semibold uppercase tracking-wider">
-                  <Star className="w-4 h-4 fill-primary" /> Customer Review
+              <div className="bg-card rounded-xl p-6 border border-border/50 flex flex-col gap-4 h-full">
+                <div className="flex gap-1">
+                  {[...Array(r.stars)].map((_, j) => <Star key={j} className="w-4 h-4 fill-primary text-primary" />)}
                 </div>
-                <div className="flex gap-1 text-primary">
-                  {[...Array(5)].map((_, j) => <Star key={j} className="w-4 h-4 fill-primary" />)}
+                <p className="text-muted-foreground italic text-sm flex-1">"{r.text}"</p>
+                <div className="pt-4 border-t border-border/50 flex items-center justify-between">
+                  <span className="text-white font-medium">{r.name}</span>
+                  <span className="text-muted-foreground text-xs">{r.city}</span>
                 </div>
-                <p className="text-muted-foreground italic text-sm sm:text-base">"Placeholder review text. The serum makes the beard softer and more manageable."</p>
-                <div className="mt-2 pt-4 border-t border-border/50 text-white font-medium">John D.</div>
               </div>
             </FadeIn>
           ))}
@@ -587,20 +701,32 @@ function HowToUse() {
   ];
 
   return (
-    <section className="py-16 sm:py-24 px-4 sm:px-6 bg-card border-y border-border/50">
+    <section className="py-10 sm:py-24 px-4 sm:px-6 bg-card border-y border-border/50">
       <div className="max-w-7xl mx-auto text-center">
-        <FadeIn className="mb-10 sm:mb-16">
-          <span className="text-primary uppercase tracking-[0.2em] text-xs sm:text-sm font-semibold block mb-3 sm:mb-4">
+        <FadeIn className="mb-6 sm:mb-16">
+          <span className="text-primary uppercase tracking-[0.2em] text-xs sm:text-sm font-semibold block mb-2 sm:mb-4">
             DAILY ROUTINE
           </span>
-          <h2 className="text-4xl sm:text-5xl md:text-7xl font-serif text-white">How To Use</h2>
+          <h2 className="text-3xl sm:text-5xl md:text-7xl font-serif text-white">How To Use</h2>
         </FadeIn>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+
+        {/* Mobile: horizontal numbered steps */}
+        <div className="flex sm:hidden gap-3 overflow-x-auto snap-x snap-mandatory pb-3 -mx-4 px-4 scrollbar-none">
+          {steps.map((step, idx) => (
+            <div key={idx} className="snap-start shrink-0 w-[70vw] bg-background/50 rounded-2xl p-5 border border-border/50 flex flex-col items-start gap-3 text-left">
+              <span className="text-4xl font-serif text-primary opacity-60 leading-none">{step.num}</span>
+              <p className="text-white text-sm font-medium">{step.text}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Desktop: grid */}
+        <div className="hidden sm:grid sm:grid-cols-3 gap-6">
           {steps.map((step, idx) => (
             <FadeIn key={idx}>
-              <div className="bg-background/50 rounded-xl p-7 sm:p-10 border border-border/50 flex flex-col items-start sm:items-center gap-4 sm:gap-6 text-left sm:text-center h-full">
-                <span className="text-5xl sm:text-6xl font-serif text-primary opacity-60">{step.num}</span>
-                <p className="text-white text-base sm:text-xl font-medium">{step.text}</p>
+              <div className="bg-background/50 rounded-xl p-10 border border-border/50 flex flex-col items-center gap-6 text-center h-full">
+                <span className="text-6xl font-serif text-primary opacity-60">{step.num}</span>
+                <p className="text-white text-xl font-medium">{step.text}</p>
               </div>
             </FadeIn>
           ))}
