@@ -1,12 +1,13 @@
 import { useState, useEffect, FormEvent } from "react";
-import { Switch, Route, Router as WouterRouter } from "wouter";
+import { Switch, Route, Router as WouterRouter, Link, useLocation } from "wouter";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster, toast } from "sonner";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   ShoppingBag, X, Plus, Minus, Phone, Menu,
   Leaf, Circle, CheckCircle, Zap, Check,
-  Star, ChevronDown, ChevronUp, Instagram
+  Star, ChevronDown, ChevronUp, Instagram,
+  Truck, Package, RotateCcw, ArrowLeft, MapPin, Clock, Shield
 } from "lucide-react";
 import heroProductImg from "./assets/hero-product.png";
 
@@ -952,24 +953,435 @@ function CashOnDeliveryCTA({ onOrderNow }: { onOrderNow: () => void }) {
 function Footer() {
   return (
     <footer className="bg-card border-t border-border/50 pt-12 sm:pt-16 pb-8 px-4 sm:px-6">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6 sm:gap-8 mb-8 sm:mb-12">
-        <div className="text-center md:text-left">
-          <div className="text-2xl sm:text-3xl font-serif tracking-widest mb-2 flex gap-2 justify-center md:justify-start">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-8 mb-10">
+        <div>
+          <div className="text-2xl font-serif tracking-widest mb-2 flex gap-2">
             <span className="text-white font-bold">NOUREA</span>
             <span className="text-primary">NATURALS</span>
           </div>
           <p className="text-muted-foreground text-sm">Nature's Finest For A Modern Man</p>
+          <div className="flex items-center gap-4 mt-4 text-xs uppercase tracking-widest font-medium">
+            <a href="https://instagram.com/noureanaturals" target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-white transition-colors">Instagram</a>
+            <a href="https://tiktok.com/@noureanaturals" target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-white transition-colors">TikTok</a>
+            <a href="https://wa.me/923198615519" target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-white transition-colors">WhatsApp</a>
+          </div>
         </div>
-        <div className="flex items-center gap-6 sm:gap-8 text-sm uppercase tracking-widest font-medium">
-          <a href="#" className="text-muted-foreground hover:text-white transition-colors">Instagram</a>
-          <a href="#" className="text-muted-foreground hover:text-white transition-colors">TikTok</a>
-          <a href="#" className="text-muted-foreground hover:text-white transition-colors">WhatsApp</a>
+
+        <div>
+          <p className="text-white text-xs uppercase tracking-widest font-semibold mb-4">Quick Links</p>
+          <div className="space-y-2.5">
+            <div><Link href="/about" className="text-muted-foreground text-sm hover:text-white transition-colors">About Us</Link></div>
+            <div><a href="#ingredients" className="text-muted-foreground text-sm hover:text-white transition-colors">Ingredients</a></div>
+            <div><a href="#benefits" className="text-muted-foreground text-sm hover:text-white transition-colors">Benefits</a></div>
+            <div><a href="#reviews" className="text-muted-foreground text-sm hover:text-white transition-colors">Reviews</a></div>
+            <div><a href="#faq" className="text-muted-foreground text-sm hover:text-white transition-colors">FAQ</a></div>
+          </div>
+        </div>
+
+        <div>
+          <p className="text-white text-xs uppercase tracking-widest font-semibold mb-4">Policies</p>
+          <div className="space-y-2.5">
+            <div><Link href="/shipping" className="text-muted-foreground text-sm hover:text-white transition-colors">Shipping Policy</Link></div>
+            <div><Link href="/returns" className="text-muted-foreground text-sm hover:text-white transition-colors">Returns & Refund</Link></div>
+            <div><a href="https://wa.me/923198615519" target="_blank" rel="noreferrer" className="text-muted-foreground text-sm hover:text-white transition-colors">Contact Us</a></div>
+          </div>
+          <div className="mt-5 p-3 bg-background/50 rounded-xl border border-border/50">
+            <p className="text-xs text-muted-foreground">Customer Support</p>
+            <a href="https://wa.me/923198615519" target="_blank" rel="noreferrer" className="text-white text-sm font-semibold hover:text-primary transition-colors">+92 319 8615519</a>
+            <p className="text-xs text-muted-foreground/60 mt-0.5">Mon–Sat · 10am–8pm</p>
+          </div>
         </div>
       </div>
-      <div className="max-w-7xl mx-auto border-t border-border/50 pt-8 text-center text-xs text-muted-foreground/50 uppercase tracking-widest">
-        © {new Date().getFullYear()} Nourea Naturals. All rights reserved.
+      <div className="max-w-7xl mx-auto border-t border-border/50 pt-6 text-center text-xs text-muted-foreground/50 uppercase tracking-widest">
+        © {new Date().getFullYear()} Nourea Naturals. All rights reserved. Made in Pakistan 🇵🇰
       </div>
     </footer>
+  );
+}
+
+// ─── STICKY ORDER BAR ────────────────────────────────────────────────────────
+function StickyOrderBar({ onOrderNow, hide }: { onOrderNow: () => void; hide: boolean }) {
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const fn = () => setVisible(window.scrollY > 700);
+    window.addEventListener("scroll", fn, { passive: true });
+    return () => window.removeEventListener("scroll", fn);
+  }, []);
+  return (
+    <AnimatePresence>
+      {visible && !hide && (
+        <motion.div
+          initial={{ y: 80, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: 80, opacity: 0 }}
+          transition={{ type: "spring", damping: 28, stiffness: 300 }}
+          className="fixed bottom-0 left-0 right-0 z-40 bg-background/96 backdrop-blur-lg border-t border-primary/30 px-4 py-3"
+          style={{ paddingBottom: "max(12px, env(safe-area-inset-bottom))" }}
+        >
+          <div className="max-w-7xl mx-auto flex items-center gap-3">
+            <img src={heroProductImg} className="w-10 h-10 rounded-xl object-cover border border-border/40 shrink-0" alt="Serum" />
+            <div className="flex-1 min-w-0">
+              <p className="text-white text-xs font-semibold leading-tight truncate">Beard Nourishing Serum</p>
+              <p className="text-primary text-xs font-bold">PKR 1,499 <span className="text-green-400 font-normal">· Free Delivery</span></p>
+            </div>
+            <button
+              onClick={onOrderNow}
+              className="bg-primary text-black text-xs sm:text-sm px-5 py-2.5 rounded-full font-bold hover:bg-primary/90 transition-all active:scale-95 shrink-0 uppercase tracking-wide"
+            >
+              Order Now
+            </button>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
+
+// ─── BUNDLE DEAL SECTION ─────────────────────────────────────────────────────
+function BundleDeal({ onOrderWithQty }: { onOrderWithQty: (qty: number) => void }) {
+  const bundles = [
+    { qty: 1, label: "STARTER", price: 1499, savings: 0, badge: null },
+    { qty: 2, label: "VALUE PACK", price: 2699, savings: 299, badge: "BEST VALUE" },
+    { qty: 3, label: "FAMILY PACK", price: 3799, savings: 698, badge: "BEST DEAL" },
+  ];
+  const [selected, setSelected] = useState(2);
+
+  return (
+    <section className="py-12 sm:py-24 px-4 sm:px-6">
+      <div className="max-w-4xl mx-auto">
+        <FadeIn className="text-center mb-8 sm:mb-14">
+          <span className="text-primary uppercase tracking-[0.2em] text-xs sm:text-sm font-semibold block mb-2 sm:mb-4">
+            BUNDLE OFFER
+          </span>
+          <h2 className="text-3xl sm:text-5xl md:text-6xl font-serif text-white leading-none">
+            Save More.<br />Look Better.
+          </h2>
+          <p className="text-muted-foreground text-sm mt-4 max-w-sm mx-auto">Jitna zyada lo, utna zyada bachao — aur serum khatam hone ki tension nahi.</p>
+        </FadeIn>
+
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mb-6">
+          {bundles.map((b) => (
+            <FadeIn key={b.qty}>
+              <button
+                onClick={() => setSelected(b.qty)}
+                className={`relative w-full rounded-2xl border p-5 sm:p-6 text-left transition-all duration-200 ${
+                  selected === b.qty
+                    ? "border-primary bg-primary/10 ring-1 ring-primary/40"
+                    : "border-border/50 bg-card hover:border-primary/40"
+                }`}
+              >
+                {b.badge && (
+                  <div className="absolute -top-2.5 left-1/2 -translate-x-1/2 z-10">
+                    <span className="bg-primary text-black text-[10px] font-bold uppercase tracking-widest px-3 py-0.5 rounded-full whitespace-nowrap">
+                      {b.badge}
+                    </span>
+                  </div>
+                )}
+                <div className="flex items-start justify-between gap-2 mb-3 mt-1">
+                  <div>
+                    <p className="text-[10px] uppercase tracking-widest font-bold text-primary">{b.label}</p>
+                    <p className="text-white font-semibold text-sm mt-0.5">{b.qty} {b.qty === 1 ? "Bottle" : "Bottles"}</p>
+                  </div>
+                  <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 mt-0.5 transition-colors ${selected === b.qty ? "border-primary" : "border-border"}`}>
+                    {selected === b.qty && <div className="w-2.5 h-2.5 rounded-full bg-primary" />}
+                  </div>
+                </div>
+                <span className="text-white text-xl sm:text-2xl font-bold">PKR {b.price.toLocaleString()}</span>
+                {b.savings > 0 ? (
+                  <p className="text-green-400 text-xs font-semibold mt-1">Save PKR {b.savings} 🎉</p>
+                ) : (
+                  <p className="text-muted-foreground/50 text-xs mt-1">Standard price</p>
+                )}
+              </button>
+            </FadeIn>
+          ))}
+        </div>
+
+        <FadeIn>
+          <button
+            onClick={() => onOrderWithQty(selected)}
+            className="w-full bg-white text-black py-4 rounded-full font-bold text-base hover:bg-white/90 transition-all active:scale-[0.98] uppercase tracking-wide"
+          >
+            Order {selected} {selected === 1 ? "Bottle" : "Bottles"} — PKR {bundles.find(b => b.qty === selected)!.price.toLocaleString()}
+          </button>
+          <p className="text-center text-muted-foreground text-xs mt-3">Free delivery on all orders · Cash on Delivery</p>
+        </FadeIn>
+      </div>
+    </section>
+  );
+}
+
+// ─── ORDER TRACKING SECTION ───────────────────────────────────────────────────
+function OrderTracking() {
+  const [phone, setPhone] = useState("");
+
+  const handleTrack = (e: FormEvent) => {
+    e.preventDefault();
+    const msg = encodeURIComponent(`Assalam o Alaikum! Mujhe apne order ka status check karna hai. Mera phone number: ${phone}`);
+    window.open(`https://wa.me/923198615519?text=${msg}`, "_blank");
+  };
+
+  return (
+    <section className="py-12 sm:py-20 px-4 sm:px-6 bg-card border-y border-border/50">
+      <div className="max-w-2xl mx-auto text-center">
+        <FadeIn>
+          <div className="w-14 h-14 bg-primary/10 border border-primary/30 rounded-2xl flex items-center justify-center mx-auto mb-5">
+            <Package className="w-6 h-6 text-primary" />
+          </div>
+          <h2 className="text-3xl sm:text-4xl font-serif text-white mb-3">Track Your Order</h2>
+          <p className="text-muted-foreground text-sm sm:text-base mb-6 sm:mb-8 max-w-md mx-auto">
+            Order place karne ke baad delivery <span className="text-white font-semibold">3–5 working days</span> mein ho jaati hai. WhatsApp pe apna number bhej kar status check karein.
+          </p>
+          <form onSubmit={handleTrack} className="flex flex-col sm:flex-row gap-3 max-w-sm mx-auto">
+            <input
+              type="tel"
+              value={phone}
+              onChange={e => setPhone(e.target.value)}
+              placeholder="03XX-XXXXXXX"
+              required
+              className="flex-1 bg-background border border-border/50 rounded-full px-5 py-3 text-white text-sm placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary/60 transition-colors"
+            />
+            <button
+              type="submit"
+              className="bg-[#25D366] text-white px-6 py-3 rounded-full font-semibold text-sm flex items-center gap-2 justify-center hover:bg-[#20bd5a] transition-all active:scale-95 shrink-0"
+            >
+              <Phone className="w-4 h-4 fill-white shrink-0" />
+              Track on WhatsApp
+            </button>
+          </form>
+          <div className="flex items-center justify-center gap-6 mt-8 flex-wrap">
+            {[
+              { icon: <Truck className="w-4 h-4" />, label: "3–5 Day Delivery" },
+              { icon: <MapPin className="w-4 h-4" />, label: "Pakistan Wide" },
+              { icon: <Clock className="w-4 h-4" />, label: "Mon–Sat 10am–8pm" },
+            ].map((item, i) => (
+              <div key={i} className="flex items-center gap-1.5 text-muted-foreground text-xs">
+                <span className="text-primary">{item.icon}</span>
+                {item.label}
+              </div>
+            ))}
+          </div>
+        </FadeIn>
+      </div>
+    </section>
+  );
+}
+
+// ─── PAGE LAYOUT WRAPPER (for inner pages) ───────────────────────────────────
+function PageLayout({ children }: { children: React.ReactNode }) {
+  const [, navigate] = useLocation();
+  return (
+    <div className="min-h-screen bg-background text-foreground font-sans">
+      <AnnouncementBar />
+      <div className="pt-[36px] sm:pt-[40px]">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-10 sm:py-16">
+          <button
+            onClick={() => navigate("/")}
+            className="flex items-center gap-2 text-muted-foreground hover:text-white transition-colors mb-10 group"
+          >
+            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+            <span className="text-sm uppercase tracking-widest">Back to Home</span>
+          </button>
+          {children}
+        </div>
+      </div>
+      <Footer />
+    </div>
+  );
+}
+
+// ─── ABOUT PAGE ───────────────────────────────────────────────────────────────
+function AboutPage() {
+  return (
+    <PageLayout>
+      <div className="space-y-10">
+        <FadeIn>
+          <span className="text-primary uppercase tracking-[0.2em] text-xs font-semibold">Our Story</span>
+          <h1 className="text-4xl sm:text-6xl font-serif text-white mt-2 mb-5 leading-none">
+            About<br />Nourea Naturals
+          </h1>
+          <p className="text-muted-foreground text-base leading-relaxed">
+            Nourea Naturals Pakistan ki pehli premium beard care brand hai jo Gen-Z men ke liye specially banai gayi hai. Hum believe karte hain ke har mard deserve karta hai ek confident, well-groomed look — aur iske liye chahiye sahi cheez, sahi price pe.
+          </p>
+        </FadeIn>
+
+        <FadeIn className="border-l-2 border-primary/50 pl-6 space-y-7">
+          {[
+            { title: "Our Mission", body: "Pakistan mein men's grooming ko normalize karna aur affordable, premium quality products provide karna jo actually kaam karein — bina kisi false claims ke." },
+            { title: "Why We're Different", body: "Hum foreign brands ki tarah mehenge nahi hain, lekin quality mein kisi se kam bhi nahi. Har ingredient carefully choose kiya gaya hai — jojoba oil, rosemary, castor oil, aur signature sandalwood — jo aapki beard ko genuinely nourish karte hain." },
+            { title: "Made in Pakistan 🇵🇰", body: "Hum proudly Pakistani hain. Har bottle Pakistan mein bana hai, carefully formulated, aur directly aapke doorstep pe deliver hoti hai Cash on Delivery ke saath. Koi advance payment nahi chahiye." },
+          ].map((item, i) => (
+            <div key={i}>
+              <h3 className="text-white font-semibold mb-2">{item.title}</h3>
+              <p className="text-muted-foreground text-sm leading-relaxed">{item.body}</p>
+            </div>
+          ))}
+        </FadeIn>
+
+        <FadeIn>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            {[
+              { n: "100%", l: "Natural Oils" },
+              { n: "PKR 1,499", l: "Affordable Price" },
+              { n: "3–5 Days", l: "Fast Delivery" },
+              { n: "COD", l: "Cash on Delivery" },
+            ].map((s, i) => (
+              <div key={i} className="bg-card border border-border/50 rounded-2xl p-4 text-center">
+                <p className="text-primary font-bold text-lg font-serif">{s.n}</p>
+                <p className="text-muted-foreground text-xs mt-1">{s.l}</p>
+              </div>
+            ))}
+          </div>
+        </FadeIn>
+
+        <FadeIn>
+          <div className="bg-primary/10 border border-primary/30 rounded-2xl p-6 text-center">
+            <p className="text-white font-semibold mb-2">Order karein aaj hi</p>
+            <p className="text-muted-foreground text-sm mb-4">Free delivery · COD · Karein Start Your Beard Journey</p>
+            <Link href="/" className="inline-block bg-primary text-black px-6 py-3 rounded-full font-bold text-sm hover:bg-primary/90 transition-all uppercase tracking-wide">
+              Shop Now — PKR 1,499
+            </Link>
+          </div>
+        </FadeIn>
+      </div>
+    </PageLayout>
+  );
+}
+
+// ─── SHIPPING POLICY PAGE ─────────────────────────────────────────────────────
+function ShippingPage() {
+  return (
+    <PageLayout>
+      <div className="space-y-8">
+        <FadeIn>
+          <span className="text-primary uppercase tracking-[0.2em] text-xs font-semibold">Delivery Info</span>
+          <h1 className="text-4xl sm:text-6xl font-serif text-white mt-2 mb-5 leading-none">
+            Shipping<br />Policy
+          </h1>
+        </FadeIn>
+
+        <div className="space-y-4">
+          {[
+            {
+              icon: <Truck className="w-5 h-5" />,
+              title: "Free Delivery — Pakistan Wide",
+              body: "Har order pe FREE delivery. Koi extra charges nahi. Lahore, Karachi, Islamabad, Peshawar, Quetta — sab jagah deliver karte hain.",
+            },
+            {
+              icon: <Clock className="w-5 h-5" />,
+              title: "Delivery Time: 3–5 Working Days",
+              body: "Order place karne ke 3–5 working days (Monday–Saturday) mein aapka parcel pahunch jaata hai. Major cities mein kabhi kabhi 2–3 days mein bhi mil jaata hai.",
+            },
+            {
+              icon: <Package className="w-5 h-5" />,
+              title: "Cash on Delivery (COD)",
+              body: "Payment sirf delivery pe karo. Pehle apna parcel receive karo, kholo dekho, tab payment do. Koi advance payment nahi.",
+            },
+            {
+              icon: <MapPin className="w-5 h-5" />,
+              title: "Order Tracking",
+              body: "Order place karne ke baad hum aapko WhatsApp pe update dete hain. Apna order track karne ke liye humse WhatsApp karein: +92 319 8615519.",
+            },
+          ].map((item, i) => (
+            <FadeIn key={i}>
+              <div className="flex gap-4 p-5 bg-card rounded-2xl border border-border/50">
+                <div className="text-primary mt-0.5 shrink-0">{item.icon}</div>
+                <div>
+                  <h3 className="text-white font-semibold mb-1.5">{item.title}</h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed">{item.body}</p>
+                </div>
+              </div>
+            </FadeIn>
+          ))}
+        </div>
+
+        <FadeIn>
+          <div className="bg-primary/10 border border-primary/30 rounded-2xl p-5">
+            <p className="text-primary font-semibold text-sm mb-1">Koi sawal? Contact karein</p>
+            <p className="text-muted-foreground text-sm">
+              WhatsApp:{" "}
+              <a href="https://wa.me/923198615519" target="_blank" rel="noreferrer" className="text-white hover:text-primary transition-colors font-semibold">
+                +92 319 8615519
+              </a>
+              <span className="text-muted-foreground/60 ml-2">· Mon–Sat 10am–8pm</span>
+            </p>
+          </div>
+        </FadeIn>
+      </div>
+    </PageLayout>
+  );
+}
+
+// ─── RETURNS & REFUND PAGE ────────────────────────────────────────────────────
+function ReturnsPage() {
+  return (
+    <PageLayout>
+      <div className="space-y-8">
+        <FadeIn>
+          <span className="text-primary uppercase tracking-[0.2em] text-xs font-semibold">Policies</span>
+          <h1 className="text-4xl sm:text-6xl font-serif text-white mt-2 mb-5 leading-none">
+            Returns &<br />Refund Policy
+          </h1>
+        </FadeIn>
+
+        <FadeIn>
+          <div className="bg-primary/10 border border-primary/30 rounded-2xl p-5">
+            <p className="text-white font-semibold mb-1.5">Aapki satisfaction hamari priority hai</p>
+            <p className="text-muted-foreground text-sm leading-relaxed">
+              Agar kisi bhi wajah se aap product se satisfy nahi hain, hum aapki madad karenge. Neeche hamari complete policy hai.
+            </p>
+          </div>
+        </FadeIn>
+
+        <div className="space-y-4">
+          {[
+            {
+              icon: <RotateCcw className="w-5 h-5" />,
+              title: "Exchange Policy — 7 Days",
+              body: "Agar product damaged ya wrong item mile toh 7 din ke andar humse WhatsApp karein. Hum free mein exchange karenge. Product unopened/unused hona zarori hai.",
+            },
+            {
+              icon: <Shield className="w-5 h-5" />,
+              title: "Damaged Product — Free Replacement",
+              body: "Agar delivery pe product damaged mile toh photo le kar hame WhatsApp karein. Hum immediately replacement bhejenge ya full refund karenge.",
+            },
+            {
+              icon: <X className="w-5 h-5" />,
+              title: "Non-Returnable Conditions",
+              body: "Opened/used product return nahi ho sakta (hygiene reasons ke liye). Wrong address dene par lost parcel ka hum zimmedar nahi. Order cancel karne par please delivery se pehle contact karein.",
+            },
+            {
+              icon: <Package className="w-5 h-5" />,
+              title: "Return Process — Simple",
+              body: "WhatsApp karo: +92 319 8615519 par apna order detail aur issue ke saath message karein. Hum 24 hours ke andar respond karenge aur agle steps batayenge.",
+            },
+          ].map((item, i) => (
+            <FadeIn key={i}>
+              <div className="flex gap-4 p-5 bg-card rounded-2xl border border-border/50">
+                <div className="text-primary mt-0.5 shrink-0">{item.icon}</div>
+                <div>
+                  <h3 className="text-white font-semibold mb-1.5">{item.title}</h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed">{item.body}</p>
+                </div>
+              </div>
+            </FadeIn>
+          ))}
+        </div>
+
+        <FadeIn>
+          <div className="bg-primary/10 border border-primary/30 rounded-2xl p-5">
+            <p className="text-primary font-semibold text-sm mb-1">Return/Exchange ke liye contact karein</p>
+            <p className="text-muted-foreground text-sm">
+              WhatsApp:{" "}
+              <a href="https://wa.me/923198615519" target="_blank" rel="noreferrer" className="text-white hover:text-primary transition-colors font-semibold">
+                +92 319 8615519
+              </a>
+              <span className="text-muted-foreground/60 ml-2">· Response within 24 hours</span>
+            </p>
+          </div>
+        </FadeIn>
+      </div>
+    </PageLayout>
   );
 }
 
@@ -1276,11 +1688,16 @@ function Main() {
     setCartOpen(true);
   };
 
+  const handleOrderWithQty = (qty: number) => {
+    setCartQuantity(qty);
+    setCartOpen(true);
+  };
+
   return (
     <div className="min-h-screen bg-background text-foreground selection:bg-primary/30 font-sans">
       <AnnouncementBar />
       <Navbar onOrderNow={handleOrderNow} />
-      
+
       <main>
         <Hero onOrderNow={handleOrderNow} />
         <TrustBadges />
@@ -1289,7 +1706,9 @@ function Main() {
         <BeforeAfter />
         <CommunityReels />
         <Reviews />
+        <BundleDeal onOrderWithQty={handleOrderWithQty} />
         <HowToUse />
+        <OrderTracking />
         <FAQ />
         <InstagramFeed />
         <CashOnDeliveryCTA onOrderNow={handleOrderNow} />
@@ -1297,19 +1716,22 @@ function Main() {
 
       <Footer />
 
-      {/* FLOATING WHATSAPP BUTTON */}
-      <button 
+      {/* FLOATING WHATSAPP BUTTON — hidden when sticky bar is showing */}
+      <StickyOrderBar onOrderNow={handleOrderNow} hide={cartOpen} />
+
+      {/* WhatsApp button — only show before sticky bar activates */}
+      <button
         onClick={handleOrderNow}
         data-testid="whatsapp-float-btn"
-        className="fixed bottom-5 right-4 sm:bottom-6 sm:right-6 z-40 bg-[#25D366] text-white px-4 sm:px-5 py-3 rounded-full flex items-center gap-2 font-medium shadow-lg hover:bg-[#20bd5a] transition-all hover:scale-105 active:scale-95 text-sm sm:text-base"
+        className="fixed bottom-5 right-4 sm:bottom-6 sm:right-6 z-30 bg-[#25D366] text-white px-4 sm:px-5 py-3 rounded-full flex items-center gap-2 font-medium shadow-lg hover:bg-[#20bd5a] transition-all hover:scale-105 active:scale-95 text-sm sm:text-base"
       >
         <Phone className="w-4 h-4 sm:w-5 sm:h-5 fill-white shrink-0" />
         <span>WhatsApp Order</span>
       </button>
 
-      <CartSidebar 
-        isOpen={cartOpen} 
-        onClose={() => setCartOpen(false)} 
+      <CartSidebar
+        isOpen={cartOpen}
+        onClose={() => setCartOpen(false)}
         quantity={cartQuantity}
         setQuantity={setCartQuantity}
       />
@@ -1323,6 +1745,9 @@ function App() {
       <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
         <Switch>
           <Route path="/" component={Main} />
+          <Route path="/about" component={AboutPage} />
+          <Route path="/shipping" component={ShippingPage} />
+          <Route path="/returns" component={ReturnsPage} />
         </Switch>
       </WouterRouter>
       <Toaster position="bottom-center" />
